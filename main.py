@@ -42,5 +42,5 @@ while True:
     pygame.draw.rect(tela, (255,0,0), (x, y, 40, 50))
     pygame.draw.rect(tela, (0,0,255), (200, 300, 40, 50))
 
-
+    """test"""
     pygame.display.update()
