@@ -73,6 +73,11 @@ while True:
    
     maca = pygame.draw.rect(tela, (255,0,0), (x_maca, y_maca, 20, 20))
 
+    if cobra.colliderect(maca):
+        x_maca = randint(40, 660)
+        y_maca = randint(50, 500)
+        pontos = pontos + 1
+        barulho_colisao.play()
 
     lista_cabeca = []
     lista_cabeca.append(x_cobra)
@@ -80,13 +85,7 @@ while True:
     
     lista_cobra.append(lista_cabeca)
 
-    if cobra.colliderect(maca):
-        x_maca = randint(40, 660)
-        y_maca = randint(50, 500)
-        pontos = pontos + 1
-        barulho_colisao.play()
-        aumenta_cobra(lista_cobra)
-    
+    aumenta_cobra(lista_cobra)
 
     tela.blit(texto_formatado, (490, 5))
     
