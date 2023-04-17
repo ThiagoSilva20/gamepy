@@ -1,7 +1,7 @@
 import pygame
 from pygame.locals import *
 from sys import exit
-
+from random import randint
 
 pygame.init()
 
@@ -9,6 +9,10 @@ largura = 640
 altura = 480
 y = altura / 2 - 50/2
 x = largura/2 - 40/2
+
+x_azul = randint(40,600)
+y_azul = randint(50,430)
+
 tela = pygame.display.set_mode((largura, altura))
 pygame.display.set_caption('Jogo')
 relogio = pygame.time.Clock()
@@ -39,8 +43,13 @@ while True:
         y = y - 4
     if pygame.key.get_pressed()[K_s]:
         y = y + 4
-    pygame.draw.rect(tela, (255,0,0), (x, y, 40, 50))
-    pygame.draw.rect(tela, (0,0,255), (200, 300, 40, 50))
+
+    ret_vermelho = pygame.draw.rect(tela, (255,0,0), (x, y, 40, 50))
+    ret_azul = pygame.draw.rect(tela, (0,0,255), (x_azul, y_azul, 40, 50))
+
+    if ret_vermelho.colliderect(ret_azul):
+        x_azul = randint(40, 600)
+        y_azul = randint(50, 430)
 
     """test"""
     pygame.display.update()
