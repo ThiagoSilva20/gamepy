@@ -15,11 +15,11 @@ barulho_colisao = pygame.mixer.Sound('colisao.wav')
 largura = 700
 altura = 540
 
-y = altura / 2 - 50/2
-x = largura/2 - 40/2
+y_cobra = altura / 2 - 50/2
+x_cobra = largura/2 - 40/2
 
-x_azul = randint(40, 660)
-y_azul = randint(50, 490)
+x_maca = randint(40, 660)
+y_maca = randint(50, 490)
 
 pontos = 0
 fonte = pygame.font.SysFont('arial', 40, True, True)
@@ -29,15 +29,21 @@ tela = pygame.display.set_mode((largura, altura))
 pygame.display.set_caption('Jogo')
 relogio = pygame.time.Clock()
 
+lista_cobra = []
+
+def aumenta_cobra(lista_cobra):
+    for XeY in lista_cobra:
+        pygame.draw.rect(tela, (0, 255, 0), (XeY[0], XeY[1], 20, 20) )
+
 while True:
 
-    relogio.tick(60)
+    relogio.tick(30)
     
-    tela.fill((0,0,0))
+    tela.fill((255,255,255))
     
     mensagem = f'Pontos: {pontos}'
 
-    texto_formatado = fonte.render(mensagem, False, (255, 255, 255))
+    texto_formatado = fonte.render(mensagem, True, (0, 0, 0))
     
     for event in pygame.event.get():
         if event.type == QUIT:
@@ -55,23 +61,32 @@ while True:
                 y = y + 20'''
         
     if pygame.key.get_pressed()[K_a]:
-        x = x - 4
+        x_cobra = x_cobra - 20
     if pygame.key.get_pressed()[K_d]:
-        x = x + 4
+        x_cobra = x_cobra + 20
     if pygame.key.get_pressed()[K_w]:
-        y = y - 4
+        y_cobra = y_cobra - 20
     if pygame.key.get_pressed()[K_s]:
-        y = y + 4
+        y_cobra = y_cobra + 20
 
-    ret_vermelho = pygame.draw.rect(tela, (255,0,0), (x, y, 40, 50))
+    cobra = pygame.draw.rect(tela, (0,255,0), (x_cobra, y_cobra, 20, 20))
    
-    ret_azul = pygame.draw.rect(tela, (0,0,255), (x_azul, y_azul, 40, 50))
+    maca = pygame.draw.rect(tela, (255,0,0), (x_maca, y_maca, 20, 20))
 
-    if ret_vermelho.colliderect(ret_azul):
-        x_azul = randint(40, 660)
-        y_azul = randint(50, 500)
+
+    lista_cabeca = []
+    lista_cabeca.append(x_cobra)
+    lista_cabeca.append(y_cobra)
+    
+    lista_cobra.append(lista_cabeca)
+
+    if cobra.colliderect(maca):
+        x_maca = randint(40, 660)
+        y_maca = randint(50, 500)
         pontos = pontos + 1
         barulho_colisao.play()
+        aumenta_cobra(lista_cobra)
+    
 
     tela.blit(texto_formatado, (490, 5))
     
